@@ -53,17 +53,13 @@ export default function Home() {
   })
   async function onSubmit(creds: z.infer<typeof formSchema>) {
     try{
-      const data = await loginUser(creds.email, creds.password, creds.role)
+      const data = await loginUser(creds.email, creds.password);
       console.log(data);
       
      if(data){
       setIsLoggedIn(true);
       toast.success("Login Successful")
-      if (creds.role === 'patient') {
-        router.push(`/patient/${encodeURIComponent(data.id)}`);
-      } else if (creds.role === 'doctor') {
-        router.push(`/doctor/${encodeURIComponent(data.id)}`);
-      }
+        router.push(`/student/${encodeURIComponent(data.id)}`);
      }
      else{
       alert("Login Failed")
@@ -82,11 +78,11 @@ export default function Home() {
   }
   return (
     <div className=" h-screen flex items-center justify-center">
-            <Toaster />
+            <Toaster richColors/>
 
       <Card className="w-1/3">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">Hospital Management System</CardTitle>
+        <CardTitle className="text-2xl font-bold">Education Management System</CardTitle>
         <CardDescription>Sign in to your account</CardDescription>
       </CardHeader>
       <CardContent>
@@ -117,27 +113,6 @@ export default function Home() {
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}/>
-
-        <FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Role</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selct your role" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="patient">Patient</SelectItem>
-                  <SelectItem value="doctor">Doctor</SelectItem>
-                </SelectContent>
-              </Select>
               <FormMessage />
             </FormItem>
           )}/>

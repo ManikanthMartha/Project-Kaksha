@@ -1,7 +1,7 @@
-async function loginUser(email: string, password: string, role: string){
+async function loginUser(email: string, password: string,){
    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method: 'POST',
-            body: JSON.stringify({ email, password, role }),
+            body: JSON.stringify({ email, password }),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -18,9 +18,9 @@ async function loginUser(email: string, password: string, role: string){
 
 
 
-async function getPatientDetils({ pid }: { pid: string }) {
+async function getStudentDetils({ sid }: { sid: string }) {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/patient/patientdata/${pid}`,{
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/student/studentdata/${sid}`,{
             method: 'GET',
         
         });
@@ -28,25 +28,16 @@ async function getPatientDetils({ pid }: { pid: string }) {
             throw new Error(res.statusText);
         }
         return res.json() as Promise<{
-            patient_info: {
-                patient_id: string,
-                name: string,
-                gender: string,
-                contact: string,
-                address: string,
+            student_info: {
+                student_id: string,
+                first_name: string,
+                last_name: string,
                 email: string,
-            },
-            medical_history: {
-                patient_id: string,
-                diagnosis: string,
-                date_of_diagnosis: string,
-                treatment_given: string,
-                family_history: string
-            },
-            patient_taken_tests:{
-                test_name: string,
-                result: string
-                date_taken: string
+            }
+            enrolled_courses: {
+                course_id: string,
+                course_name: string,
+                description: string,
             }[],
         }>;
 }
@@ -326,4 +317,4 @@ async function prescribeMeds(appointment_id:string, doctor_id: string, patient_i
         }>;
  }
 
-export { loginUser, getPatientDetils, getPatientAppointments, getPatientAppointmentsOld, getPrescription, getAvailableDoctors, getAvailableSlots, bookAppointment, getDoctorDetils, getDoctorAppointments, getAppointmentDetails, prescribeMeds, prescribeTest, docAppointmentStatus };
+export { loginUser, getStudentDetils, getPatientAppointments, getPatientAppointmentsOld, getPrescription, getAvailableDoctors, getAvailableSlots, bookAppointment, getDoctorDetils, getDoctorAppointments, getAppointmentDetails, prescribeMeds, prescribeTest, docAppointmentStatus };
