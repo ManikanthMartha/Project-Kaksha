@@ -6,7 +6,7 @@ const studentRouter = express.Router();
 studentRouter.route('/studentdata/:id')//when at patients/id 
 .get(getStudentData)
 
-studentRouter.route('/modules/:studentId/:courseId')
+studentRouter.route('/modules/:courseId')
 .get(getCourseModules);
     
 

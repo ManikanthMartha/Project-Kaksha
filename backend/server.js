@@ -5,11 +5,9 @@ const cors = require('cors');
 
 
 const authRouter = require('./authRouter/auth');
-// const patientRouter = require('./routes/patients');
-// const doctorRouter = require('./routes/doctors');
 const studentRouter = require('./routes/students');
-const {verify_doctor} = require('./middleware/verify_doctor');
-const{verify_patient} = require('./middleware/verify_patient');
+// const {verify_doctor} = require('./middleware/verify_doctor');
+// const{verify_patient} = require('./middleware/verify_patient');
 
 
 dotenv.config();

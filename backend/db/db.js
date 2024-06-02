@@ -129,23 +129,11 @@ async function getStudentData(req, res) {
 async function getCourseModules(req, res) {
     const client = await pool.connect();
     try {
-        const studentId = req.params.studentId; // Assuming student_id is passed as a URL parameter
         const courseId = req.params.courseId; // Assuming course_id is passed as a URL parameter
-
-        // Verify the student is enrolled in the course
-        const enrollmentCheckQuery = `
-            SELECT * FROM Enrollments 
-            WHERE student_id = $1 AND course_id = $2
-        `;
-        const enrollmentCheckResult = await client.query(enrollmentCheckQuery, [studentId, courseId]);
-
-        if (enrollmentCheckResult.rows.length === 0) {
-            return res.status(404).send({ error: 'Student not enrolled in the course' });
-        }
 
         // Fetch modules for the course
         const modulesQuery = `
-            SELECT m.module_id, m.module_name, m.description 
+            SELECT m.module_id, m.module_name, m.description, m.pdfurl 
             FROM Modules m
             JOIN CourseModules cm ON m.module_id = cm.module_id
             WHERE cm.course_id = $1
