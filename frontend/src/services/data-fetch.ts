@@ -58,4 +58,17 @@ async function getCourseModules({ cid }: { cid: string }) {
     }[]>;
 }
 
-export { loginUser, getStudentDetils, getCourseModules };
+async function getCourse({ cid }: { cid: string }) {
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/student/course/${cid}`,{
+        method: 'GET',
+    });    
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+    return res.json() as Promise<{
+        courseName: string
+    }>;
+}
+
+export { loginUser, getStudentDetils, getCourseModules, getCourse };

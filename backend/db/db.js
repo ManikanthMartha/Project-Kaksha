@@ -153,4 +153,24 @@ async function getCourseModules(req, res) {
     }
 }
 
-module.exports = { studusers, studpassword, student_id, getStudentData, getCourseModules };
+async function getCourse(req,res) {
+    const client = await pool.connect();
+    try {
+        const courseId = req.params.courseId;
+        const queryText = 'SELECT course_name FROM courses WHERE course_id = $1';
+        const result = await client.query(queryText, [courseId]);
+        if (result.rows.length === 0) {
+            res.status(404).send({ error: 'Course not found' });
+        } else {
+            const courseName = result.rows[0].course_name;
+            res.status(200).send({ courseName });
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).send({ error: 'Internal Server Error' });
+    } finally {
+        client.release();
+    }
+}
+
+module.exports = { studusers, studpassword, student_id, getStudentData, getCourseModules, getCourse };
