@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { sid: string } }) {
         <div className="flex items-center gap-4">
         <Dialog>
             <DialogTrigger className=" text-xl p-2 font-medium hover:underline underline-offset-4">My Profile</DialogTrigger>
-            <DialogContent className=" max-w-3xl">
+            <DialogContent className=" max-w-xl h-[300px]  content-center">
               <DialogHeader>
                 <DialogTitle>Your Details</DialogTitle>
                 <DialogDescription>
@@ -75,15 +75,19 @@ export default async function Page({ params }: { params: { sid: string } }) {
                           <TableCell>{student_data.student_info?.email}</TableCell>
                         </TableRow>
 
-                      </TableBody>
-                    </Table>
-                    <Table>
-                      <TableBody>
+                        <p className=' font-bold text-xl'>Enrolled Courses</p>
                         <TableRow>
-                          <TableCell className="font-medium">Enrolled Courses:</TableCell>
-                          <TableCell>{student_data.enrolled_courses?.map((course) => course.course_name).join(', ')}</TableCell>
+                          {/* <TableCell className="font-medium">Enrolled Courses:</TableCell> */}
+                          <TableCell>
+                            <ul >
+                              {courses.map((course) => (
+                                <li key={course.course_name}>
+                                  {course.course_name}
+                                </li>
+                              ))}
+                            </ul>
+                          </TableCell>
                         </TableRow>
-                        
 
                       </TableBody>
                     </Table>
