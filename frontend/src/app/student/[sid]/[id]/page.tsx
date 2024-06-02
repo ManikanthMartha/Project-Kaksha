@@ -4,6 +4,7 @@ import React from 'react';
 import { getCourseModules } from '@/services/data-fetch';
 import { DialogHeader } from '@/components/ui/dialog';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import PdfViewer from '@/components/PdfViewer';
 
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -34,14 +35,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                             <Dialog>
                                 <DialogTrigger>Open</DialogTrigger>
                                 <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                        <DialogDescription>
-                                            {module.pdfurl}
-                                            {/* <Viewer fileUrl={module.pdfurl} /> */}
-                                            {/* <PDFViewer pdfurl={module.pdfurl}   /> */}
-                                        </DialogDescription>
-                                    </DialogHeader>
+                                    <PdfViewer url={module.pdfurl} />
                                 </DialogContent>
                             </Dialog>
 
