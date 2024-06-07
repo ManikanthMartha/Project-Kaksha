@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from "next/link"
+import dynamic from 'next/dynamic';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -29,6 +30,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+const HandDetection = dynamic(() => import('@/components/HandDetection'), { ssr: false });
+
 
 export default async function Page({ params }: { params: { sid: string } }) {
   const sid = params.sid;
@@ -57,6 +60,15 @@ export default async function Page({ params }: { params: { sid: string } }) {
           <span>LMS</span>
         </Link>
         <div className="flex items-center gap-4">
+          <Dialog>
+            <DialogTrigger className=" text-xl p-2 font-medium hover:underline underline-offset-4">Sign Language Translation</DialogTrigger>
+            <DialogContent className=" max-w-4xl h-[650px] content-around">
+              <DialogHeader>
+                <DialogTitle>Sign Language Translation</DialogTitle>
+                  <HandDetection />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         <Dialog>
             <DialogTrigger className=" text-xl p-2 font-medium hover:underline underline-offset-4">My Profile</DialogTrigger>
             <DialogContent className=" max-w-xl h-[300px]  content-center">
@@ -116,19 +128,6 @@ export default async function Page({ params }: { params: { sid: string } }) {
         <div className="container mx-auto">
           <h1 className="text-3xl font-bold mb-6">Your Courses</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* <Link
-              href="#"
-              className="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300"
-              prefetch={false}
-            >
-              <img src="/placeholder.svg" alt="Course Image" className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <h2 className="text-xl font-bold mb-2">Introduction to Web Development</h2>
-                <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
-                  Learn the fundamentals of web development, including HTML, CSS, and JavaScript.
-                </p>
-              </div>
-            </Link> */}
             {courseImages?.map((course) => (
               <Link
               key={course.course_id}
