@@ -46,12 +46,6 @@ export default async function Page({ params }: { params: { sid: string } }) {
     })
   );
 
-  function formatDate(dateString: Date | string | number) {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', options).format(date);
-  }
-
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between h-16 px-6 bg-slate-800 text-white shadow">

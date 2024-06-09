@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { getCourse, getCourseModules } from '@/services/data-fetch';
-import { DialogHeader } from '@/components/ui/dialog';
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import PdfViewer from '@/components/PdfViewer';
+import VideoPlayer from '@/components/VideoPlayer';
+import Summary from '@/components/Summary';
+import { Dialog, DialogHeader, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
+import { getCourse, getCourseModules, fetchSummary } from '@/services/data-fetch';
 
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -24,24 +25,27 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {modules?.map((module) => (
                         <div className='flex flex-row justify-between' key={module.module_id}>
-                            <Dialog>
-                                <DialogTrigger>
-                                    <Card>
-                                        <CardContent className="flex flex-col gap-4">
-                                            <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-md text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                PDF
-                                            </div>
-                                            <h3 className="text-lg font-semibold">{module.module_name}</h3>
-                                            <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                                {module.description}
-                                            </p>
-                                        </CardContent>
-                                    </Card>
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <PdfViewer url={module.pdfurl} />
-                                </DialogContent>
-                            </Dialog>
+                            <div className='flex flex-col gap-3'>
+                                <Dialog>
+                                    <DialogTrigger>
+                                        <Card>
+                                            <CardContent className="flex flex-col gap-4">
+                                                <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-md text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                    PDF
+                                                </div>
+                                                <h3 className="text-lg font-semibold">{module.module_name}</h3>
+                                                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                                                    {module.description}
+                                                </p>
+                                            </CardContent>
+                                        </Card>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <PdfViewer url={module.pdfurl} />
+                                    </DialogContent>
+                                </Dialog>
+                                <Summary pdfUrl={module.pdfurl} moduleName={module.module_name} />
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -68,7 +72,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                                     </Card>
                                 </DialogTrigger>
                                 <DialogContent>
-                                    <PdfViewer url={module.pdfurl} />
+                                    <VideoPlayer videoUrl={module.videourl} />
                                 </DialogContent>
                             </Dialog>
                         </div>

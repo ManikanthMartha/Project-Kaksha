@@ -133,7 +133,7 @@ async function getCourseModules(req, res) {
 
         // Fetch modules for the course
         const modulesQuery = `
-            SELECT m.module_id, m.module_name, m.description, m.pdfurl 
+            SELECT m.module_id, m.module_name, m.description, m.pdfurl, m.videourl
             FROM Modules m
             JOIN CourseModules cm ON m.module_id = cm.module_id
             WHERE cm.course_id = $1
